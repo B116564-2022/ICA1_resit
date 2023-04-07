@@ -95,7 +95,7 @@ while read SampleName SampleType Replicate Time Treatment End1 End2; do
 
     # Copy the count file to the group directory
     cp "${count_file}" "${group_name}/"
-    paste "${group_name}"/*.counts.txt > "${group_name}/${group_name}.genecounts"
+    paste "${group_name}"/*.counts.txt | awk '{if(!a[$5]++) print $5,$0}' | cut -f 1-4,6- > "${group_name}/${group_name}.genecounts"
 
 
 done < "${fqfile}"
